@@ -96,8 +96,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 发送信息
-	 * @author Haomu
-	 * @date 2019年12月1日 下午12:58:59
+	 * @author Jason
+	 * @date 2020年6月23号
 	 */
 	public synchronized void send() {
 		if (!isStart) {
@@ -121,8 +121,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 服务器群发信息
-	 * @author Haomu
-	 * @date 2019年12月1日 下午12:58:38
+	 * @author Jason
+	 * @date 2020年6月23号
 	 * @param message
 	 */
 	public synchronized void sendServerMessage(String message) {
@@ -135,8 +135,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 从端口设置PortConfig里获取textPort里的端口值进行启动服务
-	 * @author Haomu
-	 * @date 2019年12月1日 下午12:59:13
+	 * @author Jason
+	 * @date 2020年6月23号
 	 */
 	public void start() {
 		if (isStart) {
@@ -167,8 +167,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 服务器停止服务
-	 * @author Haomu
-	 * @date 2019年12月1日 下午12:59:59
+	 * @author Jason
+	 * @date 2020年6月23号
 	 */
 	public void stop() {
 		if (!isStart) {
@@ -193,8 +193,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 服务器启动服务
-	 * @author Haomu
-	 * @date 2019年12月1日 下午1:00:21
+	 * @author Jason
+	 * @date 2020年6月23号
 	 * @param port
 	 */
 	public boolean serverStart(int port) {
@@ -218,8 +218,8 @@ public class ServerController {
 	/**
 	 * 
 	 * @Description 服务器关闭
-	 * @author Haomu
-	 * @date 2019年12月1日 下午1:00:32
+	 * @author Jason
+	 * @date 2020年6月23号
 	 */
 	public void closeServer() {
 		try {

@@ -14,8 +14,8 @@ import displayUI.ServerUI;
 /**
  * 
  * @Description 服务器监听线程
- * @author Haomu
- * @date 2019年12月1日 下午1:00:41
+ * @author Jason
+ * @date 2020年6月23号 
  */
 public class ServerThread extends Thread {
 	private ServerSocket serverSocket;

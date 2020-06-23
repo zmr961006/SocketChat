@@ -16,8 +16,8 @@ import user.User;
 /**
  * 
  * @Description 服务器为客户端服务线程
- * @author Haomu
- * @date 2019年12月1日 下午1:00:57
+ * @author Jason
+ * @date 2020年6月23号 下午1:00:57
  */
 public class ClientThread extends Thread {
 	private Socket socket;
@@ -152,8 +152,8 @@ public class ClientThread extends Thread {
 	/**
 	 * 
 	 * @Description 转发客户端发出的信息
-	 * @author Haomu
-	 * @date 2019年12月1日 下午1:01:26
+	 * @author Jason
+	 * @date 2020年6月23号 
 	 * @param message
 	 */
 	public void sendMessage(String message) {

@@ -14,8 +14,8 @@ import user.User;
 /**
  * 
  * @Description 客户端自用的消息传递接受线程
- * @author Haomu
- * @date 2019年12月1日 下午1:00:57
+ * @author Jason
+ * @date 2020年6月23号 下午1:00:57
  */
 public class MessageThread extends Thread {
 	private BufferedReader read;
@@ -35,8 +35,8 @@ public class MessageThread extends Thread {
 	/**
 	 * 
 	 * @Description 客户端意外关闭
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:52:36
+	 * @author Jason
+	 * @date 2020年6月23号
 	 * @throws Exception
 	 */
 	public synchronized void closeConnect() throws Exception {

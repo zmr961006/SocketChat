@@ -116,8 +116,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 发送信息
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:50:57
+	 * @author Jason
+	 * @date 2020年6月23号 下午4:50:57
 	 */
 	public synchronized void send() {
 		if (!isConnect()) {
@@ -151,8 +151,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 登录操作
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:51:15
+	 * @author Jason
+	 * @date 2020年6月23号 下午4:51:15
 	 */
 	public void login() {
 		int port = -1;
@@ -200,8 +200,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 连接服务器
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:51:26
+	 * @author Jason
+	 * @date 2020年6月23号 下午4:51:26
 	 * @param port
 	 * @param hostIp
 	 * @param name
@@ -230,8 +230,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 注销操作
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:51:36
+	 * @author Jason
+	 * @date 2020年6月23号 下午4:51:36
 	 */
 	public void logout() {
 
@@ -269,8 +269,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 客户端关闭
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:52:00
+	 * @author Jason
+	 * @date 2020年6月23号 下午4:52:00
 	 * @return
 	 */
 	public synchronized boolean closeConnect() {
@@ -300,8 +300,8 @@ public class ClientController {
 	/**
 	 * 
 	 * @Description 发送信息
-	 * @author Haomu
-	 * @date 2019年12月1日 下午4:52:13
+	 * @author Jason
+	 * @date 2020年6月23号
 	 * @param message
 	 */
 	public synchronized void sendMessage(String message) {
