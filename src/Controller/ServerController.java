@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -15,6 +17,7 @@ import displayUI.PortConfig;
 import displayUI.ServerUI;
 import operation.ClientThread;
 import operation.ServerThread;
+import user.User;
 
 public class ServerController {
 	private boolean isStart = false;
@@ -22,6 +25,8 @@ public class ServerController {
 	private ServerSocket serverSocket;
 	private ServerThread serverThread;
 	private ServerUI SU;
+	
+	public static Map<String, User> onLineUser = new HashMap<String, User>(); // 所有在线的用户
 
 	/**
 	 * Launch the application.

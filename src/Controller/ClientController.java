@@ -38,14 +38,14 @@ public class ClientController {
 //		ClientController CC = new ClientController();
 //		new ClientUI();
 	}
-
+	//是否连接
 	private boolean isConnect = false;
 	private BufferedReader read;
 	private PrintWriter write;
 	private Socket socket;
 	private MessageThread messageThread;
-	public Map<String, User> onLineUser = new HashMap<String, User>(); // 所有在线的用户
 	public ClientUI CU;
+
 	/*
 	 * 初始化
 	 */
@@ -53,8 +53,7 @@ public class ClientController {
 		CU = new ClientUI();
 		UserConfig UserCf = new UserConfig();
 		ConnectUI ConUI = new ConnectUI();
-		
-		
+
 		// 用户设置按钮
 		CU.btnUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,7 +89,7 @@ public class ClientController {
 				System.exit(0);
 			}
 		});
-		//私聊
+		// 私聊
 		CU.btnPrivate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendToOne();
@@ -117,7 +116,7 @@ public class ClientController {
 	 * 
 	 * @Description 发送信息
 	 * @author Jason
-	 * @date 2020年6月23号 下午4:50:57
+	 * @date 2020年6月23号
 	 */
 	public synchronized void send() {
 		if (!isConnect()) {
@@ -152,7 +151,7 @@ public class ClientController {
 	 * 
 	 * @Description 登录操作
 	 * @author Jason
-	 * @date 2020年6月23号 下午4:51:15
+	 * @date 2020年6月23号
 	 */
 	public void login() {
 		int port = -1;
@@ -167,30 +166,24 @@ public class ClientController {
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(CU, "输入的端口号不规范，要求为整数！");
 			}
+
 			String hostIp = ConnectUI.IpNumber.getText().trim();
 			String name = UserConfig.textName.getText().trim();
-//			System.out.println(hostIp+" "+ name);
+			User user = new User(name, hostIp);
+
 			if (hostIp.equals("") || name.equals("")) {
 				JOptionPane.showMessageDialog(CU, "Ip地址和用户名都不能为空！");
 				return;
 			}
+
+//			System.out.println(hostIp+" "+ name);
 			boolean flag = connecServer(port, hostIp, name);
-			if (flag == false) {
-				JOptionPane.showMessageDialog(CU, "与服务器连接失败！");
-				return;
-			}
-			CU.setTitle(name); // 设置客户端窗口标题为用户名
-			JOptionPane.showMessageDialog(CU, "成功连接！");
-
-			CU.comboBox.addItem(name);
-			CU.comboBox.revalidate();
-
-			CU.btnConnect.setEnabled(false);
-			CU.btnUser.setEnabled(false);
-			CU.btnLogin.setEnabled(false);
-			CU.btnLogout.setEnabled(true);
-			CU.textSend.setEditable(true);
-			CU.btnSend.setEnabled(true);
+//			if (flag == false) {
+//				JOptionPane.showMessageDialog(CU, "与服务器连接失败！");
+//				return;
+//			}
+			
+			
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(CU, e.toString());
@@ -201,7 +194,7 @@ public class ClientController {
 	 * 
 	 * @Description 连接服务器
 	 * @author Jason
-	 * @date 2020年6月23号 下午4:51:26
+	 * @date 2020年6月23号
 	 * @param port
 	 * @param hostIp
 	 * @param name
@@ -217,8 +210,9 @@ public class ClientController {
 			// 开启接收消息的线程
 			messageThread = new MessageThread(this, read, write, socket);
 			messageThread.start();
+			//判断当前线程是否已经连接
+			
 			setConnect(true); // 状态改为：已连接
-
 			return true;
 		} catch (Exception e) {
 			CU.textShow.append("与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n");
@@ -231,7 +225,7 @@ public class ClientController {
 	 * 
 	 * @Description 注销操作
 	 * @author Jason
-	 * @date 2020年6月23号 下午4:51:36
+	 * @date 2020年6月23号
 	 */
 	public void logout() {
 
@@ -270,7 +264,7 @@ public class ClientController {
 	 * 
 	 * @Description 客户端关闭
 	 * @author Jason
-	 * @date 2020年6月23号 下午4:52:00
+	 * @date 2020年6月23号
 	 * @return
 	 */
 	public synchronized boolean closeConnect() {
@@ -305,6 +299,7 @@ public class ClientController {
 	 * @param message
 	 */
 	public synchronized void sendMessage(String message) {
+		System.out.println(message);
 		write.println(message);
 		write.flush();
 	}
@@ -316,4 +311,6 @@ public class ClientController {
 	public void setConnect(boolean isConnect) {
 		this.isConnect = isConnect;
 	}
+
+	
 }

@@ -11,6 +11,8 @@ import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 
+import Controller.ClientController;
+import Controller.ServerController;
 import user.User;
 
 /**
@@ -58,9 +60,26 @@ public class ClientThread extends Thread {
 			String info = read.readLine();
 			StringTokenizer st = new StringTokenizer(info, "@");
 			user = new User(st.nextToken(), st.nextToken());
-			// 反馈连接成功的信息
-			write.print("[系统通知] " + user.getName() + "与服务器连接成功！\r\n");
-			write.flush();
+			
+			// 将当前线程的用户添加到在线用户
+			//	判断是否重复登录
+			if (ServerController.onLineUser.containsKey(user.getName())) {
+				write.println("FAILED@" + user.getName() + "@");
+				write.flush();
+			} else {
+				ServerController.onLineUser.put(user.getName(), user);
+//				for(String str:onLineUser.keySet()) {
+//				System.out.println(str);
+//			}
+//				System.out.println(ClientController.onLineUser.size());
+
+				// 反馈连接成功的信息
+				write.println("SUCCESS@" + user.getName() + "@");
+				write.flush();
+				write.print("[系统通知] " + user.getName() + "与服务器连接成功！\r\n");
+				write.flush();
+
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,7 +87,7 @@ public class ClientThread extends Thread {
 
 	public void update() {
 		boolean flag = false;
-		//记录不是自己的条数
+		// 记录不是自己的条数
 		int len = client.size();
 		// 反馈当前所有在线用户信息
 		try {
@@ -94,7 +113,7 @@ public class ClientThread extends Thread {
 
 			// 向所有的用户发送该用户上线的消息
 			for (int i = client.size() - 1; i >= 0; i--) {
-				//跳过自己
+				// 跳过自己
 				if (client.get(i).getUser().getName().equals(user.getName())) {
 					continue;
 				}
@@ -153,7 +172,7 @@ public class ClientThread extends Thread {
 	 * 
 	 * @Description 转发客户端发出的信息
 	 * @author Jason
-	 * @date 2020年6月23号 
+	 * @date 2020年6月23号
 	 * @param message
 	 */
 	public void sendMessage(String message) {
@@ -168,20 +187,20 @@ public class ClientThread extends Thread {
 				client.get(i).getWrite().println(message); // 获取用户的输出流并打印信息
 				client.get(i).getWrite().flush(); // 清空缓存区
 			}
-		}else if(owner.equals("ONE")) {//私聊
-				String privateName = st.nextToken(); //获取私聊对象的名字
-				System.out.println(privateName);
-				System.out.println(contant);
-				for (int i = client.size() - 1; i >= 0; i--) {
-					System.out.print(client.get(i).getUser().getName()+" ");
-					if (client.get(i).getUser().getName().equals(privateName)) {	
-						System.out.println("私聊");
-						message = "ONE@" + name + "悄悄对你说：" + contant;		
-						System.out.println("私聊信息："+message);
-						client.get(i).getWrite().println(message);
-						client.get(i).getWrite().flush();
-					}
+		} else if (owner.equals("ONE")) {// 私聊
+			String privateName = st.nextToken(); // 获取私聊对象的名字
+			System.out.println(privateName);
+			System.out.println(contant);
+			for (int i = client.size() - 1; i >= 0; i--) {
+				System.out.print(client.get(i).getUser().getName() + " ");
+				if (client.get(i).getUser().getName().equals(privateName)) {
+					System.out.println("私聊");
+					message = "ONE@" + name + "悄悄对你说：" + contant;
+					System.out.println("私聊信息：" + message);
+					client.get(i).getWrite().println(message);
+					client.get(i).getWrite().flush();
 				}
 			}
+		}
 	}
 }

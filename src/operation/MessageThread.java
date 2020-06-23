@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
+
 import Controller.ClientController;
 import displayUI.ClientUI;
 import user.User;
@@ -18,6 +20,7 @@ import user.User;
  * @date 2020年6月23号 下午1:00:57
  */
 public class MessageThread extends Thread {
+	private boolean isConnected;
 	private BufferedReader read;
 	private PrintWriter write;
 	private Socket socket;
@@ -71,7 +74,7 @@ public class MessageThread extends Thread {
 				System.out.println(message);
 				StringTokenizer st = new StringTokenizer(message, "/@");
 				String command = st.nextToken();
-				System.out.println("cm"+command);
+				System.out.println("cm" + command);
 				if (command.equals("CLOSE")) { // 关闭命令
 					CC.CU.textShow.append("服务器已关闭！\r\n");
 					closeConnect(); // 被动关闭连接
@@ -80,16 +83,17 @@ public class MessageThread extends Thread {
 					String userName = "";
 					String userIp = "";
 					if ((userName = st.nextToken()) != null) {
-						User user = new User(userName, userIp);
-						CC.onLineUser.put(userName, user);
+//						User user = new User(userName, userIp);
+//						ClientController.onLineUser.put(userName, user);
+
 						CC.CU.comboBox.addItem(userName);
 						CC.CU.comboBox.revalidate();
 					}
 					CC.CU.textShow.append("[系统通知] " + userName + "上线了！\r\n");
 				} else if (command.equals("DELETE")) { // 有用户下线更新列表
 					String userName = st.nextToken();
-					User user = (User) CC.onLineUser.get(userName);
-					CC.onLineUser.remove(userName);
+//					User user = (User) ClientController.onLineUser.get(userName);
+//					ClientController.onLineUser.remove(userName);
 
 					CC.CU.comboBox.removeItem(userName);
 					CC.CU.comboBox.revalidate();
@@ -101,18 +105,33 @@ public class MessageThread extends Thread {
 					for (int i = 0; i < size; i++) {
 						userName = st.nextToken();
 						userIp = st.nextToken();
-						User user = new User(userName, userIp);
-						CC.onLineUser.put(userName, user);
+//						User user = new User(userName, userIp);
+//						ClientController.onLineUser.put(userName, user);
 						CC.CU.comboBox.addItem(userName);
 						CC.CU.comboBox.revalidate();
 					}
-				}
-					else if(command.equals("ONE")){
-						String msg = st.nextToken();
+				} else if (command.equals("ONE")) {
+					String msg = st.nextToken();
 //						CC.CU.textShow.setForeground(Color.blue);
-						CC.CU.textShow.append(msg + "\r\n");
-					}
-				else { // 普通消息
+					CC.CU.textShow.append(msg + "\r\n");
+				} else if (command.equals("FAILED")) { // 反馈用户重复登录
+					String userName = st.nextToken();
+					JOptionPane.showMessageDialog(CC.CU, "该用户已登录！");
+				} else if (command.equals("SUCCESS")) {
+					String userName = st.nextToken();
+					CC.CU.setTitle(userName); // 设置客户端窗口标题为用户名
+					JOptionPane.showMessageDialog(CC.CU, "成功连接！");
+
+					CC.CU.comboBox.addItem(userName);
+					CC.CU.comboBox.revalidate();
+
+					CC.CU.btnConnect.setEnabled(false);
+					CC.CU.btnUser.setEnabled(false);
+					CC.CU.btnLogin.setEnabled(false);
+					CC.CU.btnLogout.setEnabled(true);
+					CC.CU.textSend.setEditable(true);
+					CC.CU.btnSend.setEnabled(true);
+				} else { // 普通消息
 					CC.CU.textShow.append(message + "\r\n");
 				}
 
@@ -122,5 +141,13 @@ public class MessageThread extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public boolean isConnected() {
+		return isConnected;
+	}
+
+	public void setConnected(boolean isConnected) {
+		this.isConnected = isConnected;
 	}
 }
