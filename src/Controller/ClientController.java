@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
 
 import displayUI.ClientUI;
 import displayUI.ConnectUI;
@@ -215,7 +216,13 @@ public class ClientController {
 			setConnect(true); // 状态改为：已连接
 			return true;
 		} catch (Exception e) {
-			CU.textShow.append("与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n");
+//			CU.textShow.append("与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n");
+			try {
+				this.CU.textShow.getDocument().insertString(this.CU.textShow.getDocument().getLength(),"与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n", this.CU.textShow.getStyle("normal"));
+			} catch (BadLocationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			setConnect(false); // 状态为：未连接
 			return false;
 		}

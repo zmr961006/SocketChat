@@ -19,10 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 
 import operation.MessageThread;
 import user.User;
@@ -31,7 +34,7 @@ public class ClientUI extends JFrame {
 
 	public JPanel contentPane;
 	public JTextField textSend;
-	public JTextArea textShow;
+	public JTextPane textShow;
 	public JButton btnLogin;
 	public JButton btnLogout;
 	public JButton btnUser;
@@ -207,11 +210,20 @@ public class ClientUI extends JFrame {
 		user_panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		contentPane.add(user_panel, BorderLayout.CENTER);
 		user_panel.setLayout(new BorderLayout(0, 0));
-
-		textShow = new JTextArea();
-		textShow.setEditable(false);
+		
+		
+		/*
+		 * 使用JTextPane代替JTextArea实现变色
+		 */
+		textShow = new JTextPane();
+		Style base = textShow.getStyledDocument().addStyle(null, null);
+		//设置两个风格，一个正常颜色，一个红色
+		Style normal = textShow.addStyle("normal", base);
+        Style color = textShow.addStyle("red", base);
+		StyleConstants.setForeground(color, Color.RED);
+//		textShow.setEditable(false);
 		textShow.setFont(new Font("微软雅黑", Font.BOLD, 14));
-		JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPane = new JScrollPane(textShow);
 		user_panel.add(scrollPane);
 		scrollPane.setBounds(23, 217, 650, 266);
 		textShow.setBounds(23, 217, 650, 266);
