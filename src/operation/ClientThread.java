@@ -29,7 +29,8 @@ public class ClientThread extends Thread {
 	private List<ClientThread> client;
 	private DefaultListModel listModel;
 	private JTextArea textArea;
-
+	//判断当前线程是否是要销毁的线程
+	private boolean islegal;
 	// 为用户提供输入输出流的getter方法
 	public Socket getSocket() {
 		return socket;
@@ -64,10 +65,21 @@ public class ClientThread extends Thread {
 			// 将当前线程的用户添加到在线用户
 			//	判断是否重复登录
 			if (ServerController.onLineUser.containsKey(user.getName())) {
+				islegal = false;
 				write.println("FAILED@" + user.getName() + "@");
 				write.flush();
+				//释放资源
+				this.stop();
+//				this.read.close();
+//				this.write.close(); 
+//				this.socket.close();
+				
 			} else {
+				islegal = true;
 				ServerController.onLineUser.put(user.getName(), user);
+				listModel.addElement(this.getUser().getName()); // 更新在线列表
+				client.add(this); //添加当前线程
+				textArea.append("[系统通知] " + this.getUser().getName() + "上线了！\r\n");
 //				for(String str:onLineUser.keySet()) {
 //				System.out.println(str);
 //			}
@@ -78,7 +90,6 @@ public class ClientThread extends Thread {
 				write.flush();
 				write.print("[系统通知] " + user.getName() + "与服务器连接成功！\r\n");
 				write.flush();
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -89,6 +100,9 @@ public class ClientThread extends Thread {
 		boolean flag = false;
 		// 记录不是自己的条数
 		int len = client.size();
+//		System.out.println(this.user.getName()+" "+len);
+		//当前线程为要销毁线程
+		if(!islegal) {return ;}
 		// 反馈当前所有在线用户信息
 		try {
 			if (client.size() > 0) {

@@ -91,7 +91,7 @@ public class MessageThread extends Thread {
 						CC.CU.comboBox.revalidate();
 					}
 //					CC.CU.textShow.append("[系统通知] " + userName + "上线了！\r\n");
-					
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),"[系统通知] " + userName + "上线了！\r\n", CC.CU.textShow.getStyle("normal"));
 				} else if (command.equals("DELETE")) { // 有用户下线更新列表
 					String userName = st.nextToken();
 //					User user = (User) ClientController.onLineUser.get(userName);
@@ -121,6 +121,7 @@ public class MessageThread extends Thread {
 				} else if (command.equals("FAILED")) { // 反馈用户重复登录
 					String userName = st.nextToken();
 					JOptionPane.showMessageDialog(CC.CU, "该用户已登录！");
+					this.stop();
 				} else if (command.equals("SUCCESS")) {
 					String userName = st.nextToken();
 					CC.CU.setTitle(userName); // 设置客户端窗口标题为用户名

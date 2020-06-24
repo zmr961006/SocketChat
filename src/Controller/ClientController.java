@@ -87,6 +87,7 @@ public class ClientController {
 		// ÍË³ö
 		CU.btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				logout();
 				System.exit(0);
 			}
 		});

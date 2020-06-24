@@ -40,14 +40,14 @@ public class ServerThread extends Thread {
 			try {
 				Socket socket = serverSocket.accept();
 				ClientThread clients = new ClientThread(socket, client, listModel, textArea);
-				client.add(clients);
+//				client.add(clients);
 //				System.out.println(client.size());
-				listModel.addElement(clients.getUser().getName()); // 更新在线列表
+				
 
 
 				clients.start(); // 开启客户端服务线程
 				clients.update(); //更新用户列表
-				textArea.append("[系统通知] " + clients.getUser().getName() + "上线了！\r\n");
+//				textArea.append("[系统通知] " + clients.getUser().getName() + "上线了！\r\n");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
