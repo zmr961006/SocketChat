@@ -156,10 +156,10 @@ public class ClientController {
 	 */
 	public void login() {
 		int port = -1;
-		if (isConnect()) {
-			JOptionPane.showMessageDialog(CU, "已经处于连接状态，不能重复连接！");
-			return;
-		}
+//		if (isConnect()) {
+//			JOptionPane.showMessageDialog(CU, "已经处于连接状态，不能重复连接！");
+//			return;
+//		}
 		try {
 			try {
 				port = Integer.parseInt(ConnectUI.portNumber.getText().trim());
@@ -213,7 +213,7 @@ public class ClientController {
 			messageThread.start();
 			//判断当前线程是否已经连接
 			
-			setConnect(true); // 状态改为：已连接
+//			setConnect(true); // 状态改为：已连接
 			return true;
 		} catch (Exception e) {
 //			CU.textShow.append("与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n");

@@ -125,7 +125,7 @@ public class MessageThread extends Thread {
 					String userName = st.nextToken();
 					CC.CU.setTitle(userName); // 设置客户端窗口标题为用户名
 					JOptionPane.showMessageDialog(CC.CU, "成功连接！");
-
+					CC.setConnect(true);
 					CC.CU.comboBox.addItem(userName);
 					CC.CU.comboBox.revalidate();
 

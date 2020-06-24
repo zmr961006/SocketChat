@@ -148,7 +148,7 @@ public class ClientThread extends Thread {
 					}
 
 					listModel.removeElement(user.getName());
-
+					ServerController.onLineUser.remove(this.getUser().getName());
 					// 删除此条客户端的服务线程
 					for (int i = client.size() - 1; i >= 0; i--) {
 						if (client.get(i).getUser() == user) {
