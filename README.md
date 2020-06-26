@@ -1,6 +1,10 @@
 # SocketChat
 🌍
-基于`Socket`和`Swing`制作的聊天室
+基于`Socket` `Swing` `mysql`制作的聊天室
+
+在[CSDN上的这位大佬]的代码基础上进行代码分离，修改部分逻辑添加功能。
+
+只完成大体的逻辑和功能，细节（如各部分结果的判空）都仍要修改。
 
 # 代码分离
 - 使用MVC思想将GUI和逻辑代码进行分离（只进行简单的分离，可以利用设计模式再进行分离，学艺不精暂时做不了）
@@ -41,4 +45,4 @@
 >- ~~客户端之间的私聊信息字体变色。~~
 >- ~~将JTextArea替换成JTextPane对字体颜色进行管理。~~
 
-
+[CSDN上的这位大佬]:https://blog.csdn.net/Haomua/article/details/103596402?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
