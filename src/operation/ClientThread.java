@@ -5,15 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 
-import Controller.ClientController;
 import Controller.ServerController;
-import user.User;
+import DAO.DBUtils;
+import vo.Message;
+import vo.User;
 
 /**
  * 
@@ -134,6 +136,19 @@ public class ClientThread extends Thread {
 				client.get(i).getWrite().println("ADD@" + user.getName());
 				client.get(i).getWrite().flush();
 			}
+			
+			//查询该用户是否有离线消息
+			List<String> result = new ArrayList<>();
+			result = DBUtils.query(user.getName());
+			if(result.size()==0||result==null) {return;}
+			for(int i=0;i<result.size();i++) {
+				client.get(client.size() - 1).getWrite().println("OUTONE@" +result.get(i));
+				client.get(client.size() - 1).getWrite().flush();
+			}
+			//删除查看后的数据
+			//TODO:建表时可以设置标志位，设置显示数据与否，这样可以保证历史记录的完整性
+			DBUtils.delete(user.getName());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -162,6 +177,8 @@ public class ClientThread extends Thread {
 					}
 
 					listModel.removeElement(user.getName());
+					//更新在线离线列表
+					ServerController.outLineUser.put(this.getUser().getName(),0);
 					ServerController.onLineUser.remove(this.getUser().getName());
 					// 删除此条客户端的服务线程
 					for (int i = client.size() - 1; i >= 0; i--) {
@@ -203,8 +220,6 @@ public class ClientThread extends Thread {
 			}
 		} else if (owner.equals("ONE")) {// 私聊
 			String privateName = st.nextToken(); // 获取私聊对象的名字
-			System.out.println(privateName);
-			System.out.println(contant);
 			for (int i = client.size() - 1; i >= 0; i--) {
 				System.out.print(client.get(i).getUser().getName() + " ");
 				if (client.get(i).getUser().getName().equals(privateName)) {
@@ -215,6 +230,19 @@ public class ClientThread extends Thread {
 					client.get(i).getWrite().flush();
 				}
 			}
+		}else if (owner.equals("OUTONE")) {// 离线私聊
+			String privateName = st.nextToken(); // 获取离线对象的名字
+			System.out.println(privateName);
+			System.out.println(contant);
+			//更新离线信息数量
+			ServerController.outLineUser.put(privateName,ServerController.outLineUser.get(privateName)+1);
+//			System.out.println("--------------------------");
+//			for(String na:ServerController.outLineUser.keySet()) {
+//				System.out.println(na+"--"+ServerController.outLineUser.get(na));
+//			}
+//			System.out.println("--------------------------");
+			//存入数据库
+			DBUtils.insert(new Message(name,privateName,contant));
 		}
 	}
 }

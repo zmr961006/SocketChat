@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import Controller.ClientController;
 import displayUI.ClientUI;
-import user.User;
+import vo.User;
 
 /**
  * 
@@ -71,13 +71,14 @@ public class MessageThread extends Thread {
 		while (true) {
 			try {
 				message = read.readLine();
-				System.out.println(message);
+				System.out.println("message--" + message);
 				StringTokenizer st = new StringTokenizer(message, "/@");
 				String command = st.nextToken();
 				System.out.println("cm" + command);
 				if (command.equals("CLOSE")) { // 关闭命令
 //					CC.CU.textShow.append("服务器已关闭！\r\n");
-					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), "服务器已关闭！\r\n", CC.CU.textShow.getStyle("normal"));
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), "服务器已关闭！\r\n",
+							CC.CU.textShow.getStyle("normal"));
 					closeConnect(); // 被动关闭连接
 					return; // 结束线程
 				} else if (command.equals("ADD")) { // 有用户上线更新列表
@@ -89,9 +90,13 @@ public class MessageThread extends Thread {
 
 						CC.CU.comboBox.addItem(userName);
 						CC.CU.comboBox.revalidate();
+
+						CC.CU.outlineBox.removeItem(userName);
+						CC.CU.outlineBox.revalidate();
 					}
 //					CC.CU.textShow.append("[系统通知] " + userName + "上线了！\r\n");
-					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),"[系统通知] " + userName + "上线了！\r\n", CC.CU.textShow.getStyle("normal"));
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),
+							"[系统通知] " + userName + "上线了！\r\n", CC.CU.textShow.getStyle("normal"));
 				} else if (command.equals("DELETE")) { // 有用户下线更新列表
 					String userName = st.nextToken();
 //					User user = (User) ClientController.onLineUser.get(userName);
@@ -100,11 +105,16 @@ public class MessageThread extends Thread {
 					CC.CU.comboBox.removeItem(userName);
 					CC.CU.comboBox.revalidate();
 //					CC.CU.textShow.append("[系统通知] " + userName + "下线了！\r\n");
-					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), "[系统通知] " + userName + "下线了！\r\n", CC.CU.textShow.getStyle("normal"));
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),
+							"[系统通知] " + userName + "下线了！\r\n", CC.CU.textShow.getStyle("normal"));
+
+					CC.CU.outlineBox.addItem(userName);
+					CC.CU.outlineBox.revalidate();
 				} else if (command.equals("USERLIST")) { // 更新用户列表
 					int size = Integer.parseInt(st.nextToken());
 					String userName = null;
 					String userIp = null;
+//					
 					for (int i = 0; i < size; i++) {
 						userName = st.nextToken();
 						userIp = st.nextToken();
@@ -115,9 +125,16 @@ public class MessageThread extends Thread {
 					}
 				} else if (command.equals("ONE")) {
 					String msg = st.nextToken();
-					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), msg + "\r\n", CC.CU.textShow.getStyle("red"));
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), msg + "\r\n",
+							CC.CU.textShow.getStyle("red"));
 //						CC.CU.textShow.setForeground(Color.blue);
 //					CC.CU.textShow.append(msg + "\r\n");
+				} else if (command.equals("OUTONE")) {
+					String fname = st.nextToken();
+					String tname = st.nextToken();
+					String msg = st.nextToken();
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),
+							"你离线时，" + fname + "悄悄对你说" + msg + "\r\n", CC.CU.textShow.getStyle("red"));
 				} else if (command.equals("FAILED")) { // 反馈用户重复登录
 					String userName = st.nextToken();
 					JOptionPane.showMessageDialog(CC.CU, "该用户已登录！");
@@ -138,7 +155,8 @@ public class MessageThread extends Thread {
 					CC.CU.btnSend.setEnabled(true);
 				} else { // 普通消息
 //					CC.CU.textShow.append(message + "\r\n");
-					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(), message+"\r\n", CC.CU.textShow.getStyle("normal"));
+					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),
+							message + "\r\n", CC.CU.textShow.getStyle("normal"));
 				}
 
 			} catch (IOException e) {

@@ -17,16 +17,17 @@ import displayUI.PortConfig;
 import displayUI.ServerUI;
 import operation.ClientThread;
 import operation.ServerThread;
-import user.User;
+import vo.User;
 
 public class ServerController {
 	private boolean isStart = false;
 	private List<ClientThread> client = null;
 	private ServerSocket serverSocket;
 	private ServerThread serverThread;
-	private ServerUI SU;
+	public ServerUI SU;
 	
 	public static Map<String, User> onLineUser = new HashMap<String, User>(); // 所有在线的用户
+	public static Map<String, Integer> outLineUser = new HashMap<String, Integer>(); // 所有离线的用户，key-name，value-是否有离线信息
 
 	/**
 	 * Launch the application.

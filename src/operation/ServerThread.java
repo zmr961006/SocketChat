@@ -46,7 +46,7 @@ public class ServerThread extends Thread {
 
 
 				clients.start(); // 开启客户端服务线程
-				clients.update(); //更新用户列表
+				clients.update(); //更新用户列表，查看是否有离线消息
 //				textArea.append("[系统通知] " + clients.getUser().getName() + "上线了！\r\n");
 			} catch (IOException e) {
 				e.printStackTrace();

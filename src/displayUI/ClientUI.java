@@ -28,7 +28,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
 import operation.MessageThread;
-import user.User;
+import vo.User;
 
 public class ClientUI extends JFrame {
 
@@ -42,6 +42,7 @@ public class ClientUI extends JFrame {
 	public JButton btnSend;
 	public JButton btnExit;
 	public JComboBox comboBox;
+	public JComboBox outlineBox;
 	public JButton btnPrivate;
 
 	/**
@@ -147,21 +148,31 @@ public class ClientUI extends JFrame {
 		panel_2.setBorder(new CompoundBorder());
 		message_panel.add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
+		//在线人员选项
 		comboBox = new JComboBox();
 		comboBox.addItem("所有人");
 		comboBox.setSelectedIndex(0);
 		comboBox.setFont(new Font("微软雅黑", Font.BOLD, 14));
 		panel_2.add(comboBox);
 
-		JLabel label_3 = new JLabel("                        ");
+		JLabel label_3 = new JLabel("                     ");
 		panel_2.add(label_3);
-
+		//离线人员选项
+		outlineBox = new JComboBox();
+		outlineBox.addItem("已离线");
+		outlineBox.setSelectedIndex(0);
+		outlineBox.setFont(new Font("微软雅黑", Font.BOLD, 14));
+		panel_2.add(outlineBox);
+		JLabel label_4 = new JLabel("                     ");
+		panel_2.add(label_4);
+		
+		
 		btnPrivate = new JButton("私聊");
 		btnPrivate.setBackground(Color.white);
 		btnPrivate.setFont(new Font("微软雅黑", Font.BOLD, 14));
 		panel_2.add(btnPrivate);
-
+		
+		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.white);
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();

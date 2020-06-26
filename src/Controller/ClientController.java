@@ -18,7 +18,7 @@ import displayUI.ClientUI;
 import displayUI.ConnectUI;
 import displayUI.UserConfig;
 import operation.MessageThread;
-import user.User;
+import vo.User;
 
 public class ClientController {
 
@@ -39,7 +39,8 @@ public class ClientController {
 //		ClientController CC = new ClientController();
 //		new ClientUI();
 	}
-	//是否连接
+
+	// 是否连接
 	private boolean isConnect = false;
 	private BufferedReader read;
 	private PrintWriter write;
@@ -144,8 +145,34 @@ public class ClientController {
 			JOptionPane.showMessageDialog(CU, "消息不能为空");
 			return;
 		}
-		String name = CU.comboBox.getSelectedItem().toString();
-		sendMessage(CU.getTitle() + "@" + "ONE" + "@" + message + "@" + name);
+		String onlinename = CU.comboBox.getSelectedItem().toString();
+		String outlinename = CU.outlineBox.getSelectedItem().toString();
+		System.out.println("on" + onlinename);
+		System.out.println("out" + outlinename);
+//		if(!onlinename.equals("所有人") && !outlinename.equals("已离线")) {	
+//		}
+		if (!onlinename.equals("所有人")) {
+			sendMessage(CU.getTitle() + "@" + "ONE" + "@" + message + "@" + onlinename);
+			try {
+				CU.textShow.getDocument().insertString(CU.textShow.getDocument().getLength(),
+						"你悄悄对" + onlinename + "说：" + message + "\r\n", CU.textShow.getStyle("red"));
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (!outlinename.equals("已离线")) {
+			sendMessage(CU.getTitle() + "@" + "OUTONE" + "@" + message + "@" + outlinename);
+			try {
+				CU.textShow.getDocument().insertString(CU.textShow.getDocument().getLength(),
+						"你悄悄对离线的" + outlinename + "说：" + message + "\r\n", CU.textShow.getStyle("red"));
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// 更新自己的悄悄话记录
+		
 		CU.textSend.setText(null);
 	}
 
@@ -184,8 +211,6 @@ public class ClientController {
 //				JOptionPane.showMessageDialog(CU, "与服务器连接失败！");
 //				return;
 //			}
-			
-			
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(CU, e.toString());
@@ -212,14 +237,15 @@ public class ClientController {
 			// 开启接收消息的线程
 			messageThread = new MessageThread(this, read, write, socket);
 			messageThread.start();
-			//判断当前线程是否已经连接
-			
+			// 判断当前线程是否已经连接
+
 //			setConnect(true); // 状态改为：已连接
 			return true;
 		} catch (Exception e) {
 //			CU.textShow.append("与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n");
 			try {
-				this.CU.textShow.getDocument().insertString(this.CU.textShow.getDocument().getLength(),"与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n", this.CU.textShow.getStyle("normal"));
+				this.CU.textShow.getDocument().insertString(this.CU.textShow.getDocument().getLength(),
+						"与端口号为：" + port + ",   IP地址为：" + hostIp + "的服务器连接失败！\r\n", this.CU.textShow.getStyle("normal"));
 			} catch (BadLocationException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -254,7 +280,11 @@ public class ClientController {
 
 			CU.comboBox.removeAllItems();
 			CU.comboBox.revalidate();
-
+			CU.comboBox.addItem("所有人");
+			CU.comboBox.revalidate();
+			
+			
+			
 			CU.btnConnect.setEnabled(true);
 			CU.btnUser.setEnabled(true);
 			CU.btnLogin.setEnabled(true);
@@ -320,5 +350,4 @@ public class ClientController {
 		this.isConnect = isConnect;
 	}
 
-	
 }
