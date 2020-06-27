@@ -42,7 +42,8 @@ public class DBUtils {
 			ps.close();
 			conn.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(SC.SU, "请勿重复");
+//			JOptionPane.showMessageDialog(SC.SU, "连接失败！");
+			e.printStackTrace();
 		}
 	}
 
@@ -69,7 +70,8 @@ public class DBUtils {
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(SC.SU, "连接失败");
+//			JOptionPane.showMessageDialog(SC.SU, "连接失败");
+			e.printStackTrace();
 		}
 	}
 
@@ -93,7 +95,8 @@ public class DBUtils {
 			conn.close();
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(SC.SU, "连接失败");
+//			JOptionPane.showMessageDialog(SC.SU, "连接失败");
+			e.printStackTrace();
 		}
 		return result;
 	}

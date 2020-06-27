@@ -139,7 +139,11 @@ public class ClientThread extends Thread {
 			
 			//查询该用户是否有离线消息
 			List<String> result = new ArrayList<>();
-			result = DBUtils.query(user.getName());
+			try {
+				result = DBUtils.query(user.getName());				
+			}catch(Exception e) {
+				return;
+			}
 			if(result.size()==0||result==null) {return;}
 			for(int i=0;i<result.size();i++) {
 				client.get(client.size() - 1).getWrite().println("OUTONE@" +result.get(i));

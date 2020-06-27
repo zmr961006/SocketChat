@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import DAO.DBUtils;
+import vo.Message;
 
 /**
  * @Description 测试数据库连接
@@ -14,7 +15,8 @@ import DAO.DBUtils;
 public class test {
 	public static void main(String[] args) {
 		List<String> result = new ArrayList<>();
-		result = DBUtils.query("Jason");
+		DBUtils.insert(new Message("jason","ni","ilov"));
+		result = DBUtils.query("ni");
 		System.out.println(result.toString());
 		StringTokenizer st = new StringTokenizer(result.get(0), "/@");
 		System.out.println("fname"+st.nextToken());
