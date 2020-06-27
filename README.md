@@ -5,6 +5,7 @@
 在[CSDN上的这位大佬]的代码基础上进行代码分离，修改部分逻辑添加功能。
 
 只完成大体的逻辑和功能，细节（如各部分结果的判空）都仍要修改。
+
 mysql数据库存储中文问题：[示例]
 
 # 代码分离
@@ -47,4 +48,4 @@ mysql数据库存储中文问题：[示例]
 >- ~~将JTextArea替换成JTextPane对字体颜色进行管理。~~
 
 [CSDN上的这位大佬]:https://blog.csdn.net/Haomua/article/details/103596402?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
-[示例]：https://blog.csdn.net/qq_36237569/article/details/82285599
+[示例]:https://blog.csdn.net/qq_36237569/article/details/82285599
