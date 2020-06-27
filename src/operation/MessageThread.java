@@ -134,7 +134,7 @@ public class MessageThread extends Thread {
 					String tname = st.nextToken();
 					String msg = st.nextToken();
 					CC.CU.textShow.getDocument().insertString(CC.CU.textShow.getDocument().getLength(),
-							"你离线时，" + fname + "悄悄对你说" + msg + "\r\n", CC.CU.textShow.getStyle("red"));
+							"你离线时，" + fname + "悄悄对你说：" + msg + "\r\n", CC.CU.textShow.getStyle("red"));
 				} else if (command.equals("FAILED")) { // 反馈用户重复登录
 					String userName = st.nextToken();
 					JOptionPane.showMessageDialog(CC.CU, "该用户已登录！");
