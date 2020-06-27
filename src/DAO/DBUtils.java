@@ -96,7 +96,7 @@ public class DBUtils {
 
 		} catch (Exception e) {
 //			JOptionPane.showMessageDialog(SC.SU, "连接失败");
-			e.printStackTrace();
+			System.out.println("该用户没有需要接受信息"+e.getMessage());
 		}
 		return result;
 	}
